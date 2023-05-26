@@ -1,4 +1,4 @@
-### The 'Throwing Errors' is to achieve all 6 of the user stories below by working through the HTML and JavaScript code:
+### The 'Throwing Errors' challenge is to achieve all 6 of the user stories below by working through the JavaScript code:
 
 ### Resolved Stories
 **Scenario: Starting program state**
