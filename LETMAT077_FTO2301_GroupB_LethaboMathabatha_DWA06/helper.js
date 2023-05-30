@@ -1,48 +1,39 @@
 /**
- * @class PreviewHelper for generating starting books 
- * @param {Array} matches - list of books
+ * Generates a document fragment containing a list of buttons, each representing a starting book.
+ *
+ * @param {Array} matches - The list of books.
+ * @param {number} BOOKS_PER_PAGE - The number of books to display per page.
+ * @param {object} authors - An object containing the authors of the books.
+ * @return {DocumentFragment} A document fragment containing a list of buttons representing the starting books.
  */
-export class PreviewHelper {
-  constructor(matches) {
-    this.matches = matches;
+export function getStartingBooks(matches, BOOKS_PER_PAGE, authors) {
+  const starting = document.createDocumentFragment();
+
+  for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
+    const element = document.createElement('button');
+    element.classList = 'preview';
+    element.setAttribute('data-preview', id);
+
+    element.innerHTML = `
+        <img
+            class="preview__image"
+            src="${image}"
+        />
+        
+        <div class="preview__info">
+            <h3 class="preview__title">${title}</h3>
+            <div class="preview__author">${authors[author]}</div>
+        </div>
+    `;
+
+    starting.appendChild(element);
   }
 
-    /**
-   * Returns a document fragment containing a list of buttons, each representing a starting book.
-   *
-   * @param {number} BOOKS_PER_PAGE - The number of books to display per page.
-   * @param {object} authors - An object containing the authors of the books.
-   * @return {DocumentFragment} A document fragment containing a list of buttons representing the starting books.
-   */
-  getStartingBooks(BOOKS_PER_PAGE, authors) {
-    const starting = document.createDocumentFragment();
-
-    for (const { author, id, image, title } of this.matches.slice(
-      0,
-      BOOKS_PER_PAGE
-    )) {
-      const element = document.createElement("button");
-      element.classList = "preview";
-      element.setAttribute("data-preview", id);
-
-      element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-
-      starting.appendChild(element);
-    }
-
-    return starting;
-  }
+  return starting;
 }
+
+
+
 
 /**
  * Loads more books onto the page based on the given parameters.
@@ -115,31 +106,30 @@ export function createAuthorOptions(authors) {
   return authorsHtml;
 }
 
-/**
- * Toggles the theme between day and night mode based on the user's system settings.
- *
- * @return {void} 
- */
-export function toggleTheme() {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    document.querySelector("[data-settings-theme]").value = "night";
-    document.documentElement.style.setProperty("--color-dark", "255, 255, 255");
-    document.documentElement.style.setProperty("--color-light", "10, 10, 20");
-  } else {
-    document.querySelector("[data-settings-theme]").value = "day";
-    document.documentElement.style.setProperty("--color-dark", "10, 10, 20");
-    document.documentElement.style.setProperty("--color-light", "255, 255, 255");
-  }
-  
-}
 
+ 
+/**
+ * Sets the theme of the page to either "night" or "day" by changing the background colors
+ * and updating the value of a data attribute.
+ *
+ * @param {string} theme - The theme to set the page to, either "night" or "day".
+ * @return {void} This function does not return anything.
+ */
+export function setTheme(theme) {
+  {
+    const colorDark = theme === "night" ? "255, 255, 255" : "10, 10, 20";
+    const colorLight = theme === "night" ? "10, 10, 20" : "255, 255, 255";
+
+    document.querySelector("[data-settings-theme]").value = theme;
+    document.documentElement.style.setProperty("--color-dark", colorDark);
+    document.documentElement.style.setProperty("--color-light", colorLight);
+  }
+}
 
 /**
  * Handles the overlays by adding event listeners to various elements and toggling the open property of corresponding overlays.
  * @return {void} 
+ * 
  */
 export function handleOverlays() {
   document.querySelector("[data-search-cancel]").addEventListener("click", () => {
@@ -211,6 +201,8 @@ export function handleSettings() {
  * @param {Array} matches - an array of book objects that match the search criteria
  * @return {void} This function does not return anything.
  */
+
+
 export function processSearchForm(authors, books, BOOKS_PER_PAGE, page, matches) {
   document
   .querySelector("[data-search-form]")
@@ -330,6 +322,8 @@ export function handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches) {
   });
 }
 
+
+// data list items
 export function handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches) {
   document
   .querySelector("[data-list-items]")
@@ -365,3 +359,5 @@ export function handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches)
     }
   });
 }
+
+// handle query selectors
