@@ -1,4 +1,4 @@
-import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
+import { books, authors, genres, BOOKS_PER_PAGE } from "./modules/data.js";
 import { 
   getStartingBooks, 
   createGenreOptions, 
@@ -10,13 +10,10 @@ import {
   processSearchForm, 
   handlePreviews, 
   handleActiveBooks,
-  
-  handleSearchOverlays,
-  handleSettingsOverlays,
-  handleHeaderSearchOverlays,
-  handleHeaderSettingsOverlays,
-  handleListOverlays
-} from "./helper.js";
+} from "./modules/helper.js";
+
+import { 
+  handleSearchOverlays, handleSettingsOverlays, handleHeaderSearchOverlays, handleHeaderSettingsOverlays, handleListOverlays } from "./modules/handlers.js";
 
 let page = 1;
 let matches = books;
