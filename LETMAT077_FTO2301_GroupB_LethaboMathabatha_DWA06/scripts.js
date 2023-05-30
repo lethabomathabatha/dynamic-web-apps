@@ -5,12 +5,17 @@ import {
   createAuthorOptions, 
   loadMoreBooks, 
   setTheme, 
-  handleOverlays, 
+  // handleOverlays, 
   handleSettings, 
   processSearchForm, 
   handlePreviews, 
   handleActiveBooks,
-  // displayBookDetails
+  
+  handleSearchOverlays,
+  handleSettingsOverlays,
+  handleHeaderSearchOverlays,
+  handleHeaderSettingsOverlays,
+  handleListOverlays
 } from "./helper.js";
 
 let page = 1;
@@ -34,6 +39,7 @@ document.querySelector("[data-search-authors]").appendChild(authorsHtml);
  *
  * @return {void} This function does not return a value.
  */
+
 function setThemeUsingColourScheme() {
   if (
     window.matchMedia &&
@@ -51,7 +57,17 @@ loadMoreBooks(page, matches, books, BOOKS_PER_PAGE);
 
 
 // overlay
-handleOverlays();
+// handleOverlays();
+document.querySelector("[data-search-cancel]").addEventListener("click", handleSearchOverlays);
+document.querySelector("[data-settings-cancel]").addEventListener("click", handleSettingsOverlays);
+document.querySelector("[data-header-search]").addEventListener("click", handleHeaderSearchOverlays);
+document.querySelector("[data-header-settings]").addEventListener("click", handleHeaderSettingsOverlays);
+document.querySelector("[data-list-close]").addEventListener("click", handleListOverlays);
+
+
+
+
+
 
 // settings handler
 handleSettings();

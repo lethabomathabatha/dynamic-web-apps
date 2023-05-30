@@ -61,6 +61,32 @@ export function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
 }
 
 /**
+ * Handles the overlays by adding event listeners to various elements and toggling the open property of corresponding overlays.
+ * @return {void} 
+ * 
+ */
+export function handleSearchOverlays() {
+  document.querySelector("[data-search-overlay]").open = false;
+}
+
+export function handleSettingsOverlays() {
+  document.querySelector("[data-settings-overlay]").open = false;
+}
+
+export function handleHeaderSearchOverlays() {
+  document.querySelector("[data-search-overlay]").open = true;
+  document.querySelector("[data-search-title]").focus();
+}
+
+export function handleHeaderSettingsOverlays() {
+  document.querySelector("[data-settings-overlay]").open = true;
+}  
+
+export function handleListOverlays() {
+  document.querySelector("[data-list-active]").open = false;
+}
+
+/**
  * Creates a document fragment of genre options for a select element based on
  * the received genres object.
  * @param {Object} genres - An object containing genre id and name pairs.
@@ -126,37 +152,6 @@ export function setTheme(theme) {
   }
 }
 
-/**
- * Handles the overlays by adding event listeners to various elements and toggling the open property of corresponding overlays.
- * @return {void} 
- * 
- */
-export function handleOverlays() {
-  document.querySelector("[data-search-cancel]").addEventListener("click", () => {
-    document.querySelector("[data-search-overlay]").open = false;
-  });
-  
-  document
-    .querySelector("[data-settings-cancel]")
-    .addEventListener("click", () => {
-      document.querySelector("[data-settings-overlay]").open = false;
-    });
-  
-  document.querySelector("[data-header-search]").addEventListener("click", () => {
-    document.querySelector("[data-search-overlay]").open = true;
-    document.querySelector("[data-search-title]").focus();
-  });
-  
-  document
-    .querySelector("[data-header-settings]")
-    .addEventListener("click", () => {
-      document.querySelector("[data-settings-overlay]").open = true;
-    });
-  
-  document.querySelector("[data-list-close]").addEventListener("click", () => {
-    document.querySelector("[data-list-active]").open = false;
-  });
-}
 
 /**
  * Handles the settings form submission and updates the theme of the document.
