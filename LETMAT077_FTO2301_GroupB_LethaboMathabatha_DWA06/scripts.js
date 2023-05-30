@@ -6,7 +6,7 @@ import {
   loadMoreBooks, 
   setTheme, 
 
-  handleSettings, 
+  handleSettingsFormSubmit, 
   processSearchForm, 
   handlePreviews, 
   handleActiveBooks,
@@ -56,7 +56,7 @@ setThemeUsingColourScheme();
 loadMoreBooks(page, matches, books, BOOKS_PER_PAGE);
 
 
-// handleOverlays();
+// overlay handlers
 document.querySelector("[data-search-cancel]").addEventListener("click", handleSearchOverlays);
 document.querySelector("[data-settings-cancel]").addEventListener("click", handleSettingsOverlays);
 document.querySelector("[data-header-search]").addEventListener("click", handleHeaderSearchOverlays);
@@ -64,7 +64,10 @@ document.querySelector("[data-header-settings]").addEventListener("click", handl
 document.querySelector("[data-list-close]").addEventListener("click", handleListOverlays);
 
 // settings handler
-handleSettings();
+document
+  .querySelector("[data-settings-form]")
+  .addEventListener("submit", handleSettingsFormSubmit);
+
 
 // search handler
 processSearchForm(authors, books, BOOKS_PER_PAGE, page, matches);

@@ -159,10 +159,8 @@ export function setTheme(theme) {
  * @param {Event} event - The submit event triggered by the form.
  * @return {void} This function does not return anything.
  */
-export function handleSettings() {
-  document
-  .querySelector("[data-settings-form]")
-  .addEventListener("submit", (event) => {
+export function handleSettingsFormSubmit(event) {
+
     event.preventDefault();
     const formData = new FormData(event.target);
     const { theme } = Object.fromEntries(formData);
@@ -182,8 +180,8 @@ export function handleSettings() {
     }
 
     document.querySelector("[data-settings-overlay]").open = false;
-  });
-}
+  };
+
 
 
 /**
