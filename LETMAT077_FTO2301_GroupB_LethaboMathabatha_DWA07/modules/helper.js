@@ -32,31 +32,6 @@ export function getStartingBooks(matches, BOOKS_PER_PAGE, authors) {
   return starting;
 }
 
-/**
- * Loads more books onto the page based on the given parameters.
- *
- * @param {number} page - The current page number.
- * @param {Array} matches - An array of book matches.
- * @param {Array} books - An array of all books.
- * @param {number} BOOKS_PER_PAGE - The maximum number of books per page.
- */
-export function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
-  document.querySelector("[data-list-button]").innerText = `Show more (${
-    books.length - BOOKS_PER_PAGE 
-  })`;
-  document.querySelector("[data-list-button]").disabled =
-    matches.length - page * BOOKS_PER_PAGE > 0;
-  
-  document.querySelector("[data-list-button]").innerHTML = `
-      <span>Show more</span>
-      <span class="list__remaining"> (${
-        matches.length - page * BOOKS_PER_PAGE > 0
-          ? matches.length - page * BOOKS_PER_PAGE
-          : 0
-      })</span>
-  `;
-}
-
 
 /**
  * Creates a document fragment of genre options for a select element based on
@@ -64,23 +39,25 @@ export function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
  * @param {Object} genres - An object containing genre id and name pairs.
  * @return {DocumentFragment} A document fragment containing the genre options.
  */
-export function createGenreOptions(genres) {
+export function createGenreOptionsFragment(options) {
   const genreHtml = document.createDocumentFragment();
 
-  const firstGenreElement = document.createElement("option");
-  firstGenreElement.value = "any";
-  firstGenreElement.innerText = "All Genres";
-  genreHtml.appendChild(firstGenreElement);
-
-  for (const [id, name] of Object.entries(genres)) {
-    const element = document.createElement("option");
-    element.value = id;
-    element.innerText = name;
+  for (const { value, text } of options) {
+    const element = createGenreOptionsElement(value, text);
     genreHtml.appendChild(element);
   }
 
   return genreHtml;
 }
+
+export function createGenreOptionsElement(value, text) {
+  const element = document.createElement("option");
+  element.value = value;
+  element.innerText = text;
+  return element;
+}
+
+
 
 /**
  * Creates author options based on an array of authors and returns a document fragment.
@@ -288,8 +265,6 @@ export function handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches) {
 
 
 // data list items
-
-
 export function singleActiveBook(event, authors, books) {
   const pathArray = Array.from(event.path || event.composedPath());
   let active = null;
@@ -308,7 +283,6 @@ export function singleActiveBook(event, authors, books) {
       active = result;
     }
   }
-
 
 
   if (active) {
