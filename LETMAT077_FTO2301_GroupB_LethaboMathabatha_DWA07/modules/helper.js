@@ -288,29 +288,30 @@ export function handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches) {
 
 
 // data list items
-export function handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches) {
-  document
-  .querySelector("[data-list-items]")
-  .addEventListener("click", (event) => {
-    const pathArray = Array.from(event.path || event.composedPath());
-    let active = null;
 
-    for (const node of pathArray) {
-      if (active) break;
 
-      if (node?.dataset?.preview) {
-        let result = null;
+export function singleActiveBook(event, authors, books) {
+  const pathArray = Array.from(event.path || event.composedPath());
+  let active = null;
 
-        for (const singleBook of books) {
-          if (result) break;
-          if (singleBook.id === node?.dataset?.preview) result = singleBook;
-        }
+  for (const node of pathArray) {
+    if (active) break;
 
-        active = result;
+    if (node?.dataset?.preview) {
+      let result = null;
+
+      for (const singleBook of books) {
+        if (result) break;
+        if (singleBook.id === node?.dataset?.preview) result = singleBook;
       }
-    }
 
-    if (active) {
+      active = result;
+    }
+  }
+
+
+
+  if (active) {
       document.querySelector("[data-list-active]").open = true;
       document.querySelector("[data-list-blur]").src = active.image;
       document.querySelector("[data-list-image]").src = active.image;
@@ -321,7 +322,7 @@ export function handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches)
       document.querySelector("[data-list-description]").innerText =
         active.description;
     }
-  });
-}
+  };
+
 
 

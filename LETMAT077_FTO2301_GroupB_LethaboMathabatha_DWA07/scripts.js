@@ -9,7 +9,7 @@ import {
   handleSettingsFormSubmit, 
   processSearchForm, 
   handlePreviews, 
-  handleActiveBooks,
+  singleActiveBook
 } from "./modules/helper.js";
 
 import { 
@@ -73,6 +73,13 @@ processSearchForm(authors, books, BOOKS_PER_PAGE, page, matches);
 handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches);
 
 // active book/list handler
-handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches);
+// handleActiveBooks(authors, books, handleEachActiveBook);
+function handleActiveBooks(authors, books) {
+  document
+  .querySelector("[data-list-items]")
+  .addEventListener("click", (event) => {
+    singleActiveBook(event, authors, books);
+  });
+}
+handleActiveBooks(authors, books);
 
-// displayBookDetails(authors, books, BOOKS_PER_PAGE, page, matches);
