@@ -1,6 +1,6 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./modules/data.js";
 import { 
-  getStartingBooks, 
+  createBookGenerator, 
   createGenreOptionsFragment,
   createAuthorOptionsFragment, 
   setTheme, 
@@ -17,10 +17,10 @@ import {
 let page = 1;
 let matches = books;
 
-// Generates a document fragment containing a list of buttons, each representing a starting book.
-const startingBooks = getStartingBooks(matches, BOOKS_PER_PAGE, authors);
+// generate starting books
+const bookGenerator = createBookGenerator();
+const startingBooks = bookGenerator.getStartingBooks(matches, BOOKS_PER_PAGE, authors);
 document.querySelector('[data-list-items]').appendChild(startingBooks);
-
 
 /**
  * Loads more books onto the page based on the given parameters.
@@ -55,6 +55,13 @@ const genreOptionsFragment = createGenreOptionsFragment(genreOptions);
 
 const selectElement = document.querySelector("[data-search-genres]");
 selectElement.appendChild(genreOptionsFragment);
+
+/**
+ * Creates an array of genre options based on the given genres object.
+ *
+ * @param {Object} genres - An object containing genre IDs as keys and genre names as values.
+ * @return {Array} An array of genre options, each containing a value and text property.
+ */
 function createGenreOptions(genres) {
   const options = [];
 
@@ -70,8 +77,8 @@ function createGenreOptions(genres) {
     });
   }
   return options;
-  
 } 
+
 
 // generate author options
 const authorOptions = generateAuthorOptions(authors);
@@ -97,7 +104,6 @@ function generateAuthorOptions(authors) {
       text: name,
     });
   }
-
   return options;
 }
 
