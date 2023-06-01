@@ -2,14 +2,13 @@ import { books, authors, genres, BOOKS_PER_PAGE } from "./modules/data.js";
 import { 
   getStartingBooks, 
   createGenreOptionsFragment,
-  createGenreOptionsElement, 
-  createAuthorOptions, 
+  createAuthorOptionsFragment, 
   setTheme, 
 
   handleSettingsFormSubmit, 
   processSearchForm, 
   handlePreviews, 
-  singleActiveBook
+  singleActiveBook,
 } from "./modules/helper.js";
 
 import { 
@@ -74,10 +73,33 @@ function createGenreOptions(genres) {
   
 } 
 
-
 // generate author options
-const authorsHtml = createAuthorOptions(authors);
-document.querySelector("[data-search-authors]").appendChild(authorsHtml);
+const authorOptions = generateAuthorOptions(authors);
+const authorOptionsFragment = createAuthorOptionsFragment(authorOptions);
+document.querySelector("[data-search-authors]").appendChild(authorOptionsFragment);
+
+/**
+ * Creates author options based on an array of authors and returns an array of option objects.
+ * @param {Object} authors - An object with author information.
+ * @return {Array} An array of option objects.
+ */
+function generateAuthorOptions(authors) {
+  const options = [];
+
+  options.push({
+    value: "any",
+    text: "All Authors",
+  });
+
+  for (const [id, name] of Object.entries(authors)) {
+    options.push({
+      value: id,
+      text: name,
+    });
+  }
+
+  return options;
+}
 
 
 /**

@@ -50,7 +50,7 @@ export function createGenreOptionsFragment(options) {
   return genreHtml;
 }
 
-export function createGenreOptionsElement(value, text) {
+function createGenreOptionsElement(value, text) {
   const element = document.createElement("option");
   element.value = value;
   element.innerText = text;
@@ -60,28 +60,24 @@ export function createGenreOptionsElement(value, text) {
 
 
 /**
- * Creates author options based on an array of authors and returns a document fragment.
- * @param {Object} authors - An object with author information.
- * @return {DocumentFragment} A document fragment with author options.
+ * Creates a document fragment of author option elements based on the received options array.
+ * @param {Array} options - An array of option objects.
+ * @return {DocumentFragment} A document fragment containing the option elements.
  */
-export function createAuthorOptions(authors) {
-  const authorsHtml = document.createDocumentFragment();
-  const firstAuthorElement = document.createElement("option");
-  firstAuthorElement.value = "any";
-  firstAuthorElement.innerText = "All Authors";
-  authorsHtml.appendChild(firstAuthorElement);
-  
-  for (const [id, name] of Object.entries(authors)) {
-    const element = document.createElement("option");
-    element.value = id;
-    element.innerText = name;
-    authorsHtml.appendChild(element);
-  }
-  
-  return authorsHtml;
-}
+export function createAuthorOptionsFragment(options) {
+  const fragment = document.createDocumentFragment();
 
+  for (const { value, text } of options) {
+    const element = document.createElement("option");
+    element.value = value;
+    element.innerText = text;
+    fragment.appendChild(element);
+  }
+
+  return fragment;
+}
  
+
 /**
  * Sets the theme of the page to either "night" or "day" by changing the background colors
  * and updating the value of a data attribute.
