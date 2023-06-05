@@ -1,15 +1,14 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./modules/data.js";
 import { 
   getStartingBooks, 
-  createGenreOptions, 
-  createAuthorOptions, 
-  loadMoreBooks, 
+  createGenreOptionsFragment,
+  createAuthorOptionsFragment, 
   setTheme, 
 
   handleSettingsFormSubmit, 
   processSearchForm, 
   handlePreviews, 
-  handleActiveBooks,
+  singleActiveBook,
 } from "./modules/helper.js";
 
 import { 
@@ -18,17 +17,89 @@ import {
 let page = 1;
 let matches = books;
 
-// previewHelper for generating starting books
+// Generates a document fragment containing a list of buttons, each representing a starting book.
 const startingBooks = getStartingBooks(matches, BOOKS_PER_PAGE, authors);
 document.querySelector('[data-list-items]').appendChild(startingBooks);
 
+
+/**
+ * Loads more books onto the page based on the given parameters.
+ *
+ * @param {number} page - The current page number.
+ * @param {Array} matches - An array of book matches.
+ * @param {Array} books - An array of all books.
+ * @param {number} BOOKS_PER_PAGE - The maximum number of books per page.
+ */
+function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
+  document.querySelector("[data-list-button]").innerText = `Show more (${
+    books.length - BOOKS_PER_PAGE 
+  })`;
+  document.querySelector("[data-list-button]").disabled =
+    matches.length - page * BOOKS_PER_PAGE > 0;
+  
+  document.querySelector("[data-list-button]").innerHTML = `
+      <span>Show more</span>
+      <span class="list__remaining"> (${
+        matches.length - page * BOOKS_PER_PAGE > 0
+          ? matches.length - page * BOOKS_PER_PAGE
+          : 0
+      })</span>
+  `;
+}
+
+
 // generate genre options
-const genreHtml = createGenreOptions(genres);
-document.querySelector("[data-search-genres]").appendChild(genreHtml);
+const genreOptions = createGenreOptions(genres);
+
+const genreOptionsFragment = createGenreOptionsFragment(genreOptions);
+
+const selectElement = document.querySelector("[data-search-genres]");
+selectElement.appendChild(genreOptionsFragment);
+function createGenreOptions(genres) {
+  const options = [];
+
+  options.push({
+    value: "any",
+    text: "All Genres",
+  })
+
+  for (const [id, name] of Object.entries(genres)) {
+    options.push({
+      value: id,
+      text: name,
+    });
+  }
+  return options;
+  
+} 
 
 // generate author options
-const authorsHtml = createAuthorOptions(authors);
-document.querySelector("[data-search-authors]").appendChild(authorsHtml);
+const authorOptions = generateAuthorOptions(authors);
+const authorOptionsFragment = createAuthorOptionsFragment(authorOptions);
+document.querySelector("[data-search-authors]").appendChild(authorOptionsFragment);
+
+/**
+ * Creates author options based on an array of authors and returns an array of option objects.
+ * @param {Object} authors - An object with author information.
+ * @return {Array} An array of option objects.
+ */
+function generateAuthorOptions(authors) {
+  const options = [];
+
+  options.push({
+    value: "any",
+    text: "All Authors",
+  });
+
+  for (const [id, name] of Object.entries(authors)) {
+    options.push({
+      value: id,
+      text: name,
+    });
+  }
+
+  return options;
+}
 
 
 /**
@@ -38,10 +109,7 @@ document.querySelector("[data-search-authors]").appendChild(authorsHtml);
  */
 
 function setThemeUsingColourScheme() {
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     setTheme("night");
   } else {
     setTheme("day");
@@ -73,6 +141,12 @@ processSearchForm(authors, books, BOOKS_PER_PAGE, page, matches);
 handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches);
 
 // active book/list handler
-handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches);
+function handleActiveBooks(authors, books) {
+  document
+  .querySelector("[data-list-items]")
+  .addEventListener("click", (event) => {
+    singleActiveBook(event, authors, books);
+  });
+}
+handleActiveBooks(authors, books);
 
-// displayBookDetails(authors, books, BOOKS_PER_PAGE, page, matches);

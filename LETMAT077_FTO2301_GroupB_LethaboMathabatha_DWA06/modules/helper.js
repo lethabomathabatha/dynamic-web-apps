@@ -32,31 +32,6 @@ export function getStartingBooks(matches, BOOKS_PER_PAGE, authors) {
   return starting;
 }
 
-/**
- * Loads more books onto the page based on the given parameters.
- *
- * @param {number} page - The current page number.
- * @param {Array} matches - An array of book matches.
- * @param {Array} books - An array of all books.
- * @param {number} BOOKS_PER_PAGE - The maximum number of books per page.
- */
-export function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
-  document.querySelector("[data-list-button]").innerText = `Show more (${
-    books.length - BOOKS_PER_PAGE 
-  })`;
-  document.querySelector("[data-list-button]").disabled =
-    matches.length - page * BOOKS_PER_PAGE > 0;
-  
-  document.querySelector("[data-list-button]").innerHTML = `
-      <span>Show more</span>
-      <span class="list__remaining"> (${
-        matches.length - page * BOOKS_PER_PAGE > 0
-          ? matches.length - page * BOOKS_PER_PAGE
-          : 0
-      })</span>
-  `;
-}
-
 
 /**
  * Creates a document fragment of genre options for a select element based on
@@ -64,47 +39,45 @@ export function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
  * @param {Object} genres - An object containing genre id and name pairs.
  * @return {DocumentFragment} A document fragment containing the genre options.
  */
-export function createGenreOptions(genres) {
+export function createGenreOptionsFragment(options) {
   const genreHtml = document.createDocumentFragment();
 
-  const firstGenreElement = document.createElement("option");
-  firstGenreElement.value = "any";
-  firstGenreElement.innerText = "All Genres";
-  genreHtml.appendChild(firstGenreElement);
-
-  for (const [id, name] of Object.entries(genres)) {
-    const element = document.createElement("option");
-    element.value = id;
-    element.innerText = name;
+  for (const { value, text } of options) {
+    const element = createGenreOptionsElement(value, text);
     genreHtml.appendChild(element);
   }
 
   return genreHtml;
 }
 
-/**
- * Creates author options based on an array of authors and returns a document fragment.
- * @param {Object} authors - An object with author information.
- * @return {DocumentFragment} A document fragment with author options.
- */
-export function createAuthorOptions(authors) {
-  const authorsHtml = document.createDocumentFragment();
-  const firstAuthorElement = document.createElement("option");
-  firstAuthorElement.value = "any";
-  firstAuthorElement.innerText = "All Authors";
-  authorsHtml.appendChild(firstAuthorElement);
-  
-  for (const [id, name] of Object.entries(authors)) {
-    const element = document.createElement("option");
-    element.value = id;
-    element.innerText = name;
-    authorsHtml.appendChild(element);
-  }
-  
-  return authorsHtml;
+function createGenreOptionsElement(value, text) {
+  const element = document.createElement("option");
+  element.value = value;
+  element.innerText = text;
+  return element;
 }
 
+
+
+/**
+ * Creates a document fragment of author option elements based on the received options array.
+ * @param {Array} options - An array of option objects.
+ * @return {DocumentFragment} A document fragment containing the option elements.
+ */
+export function createAuthorOptionsFragment(options) {
+  const fragment = document.createDocumentFragment();
+
+  for (const { value, text } of options) {
+    const element = document.createElement("option");
+    element.value = value;
+    element.innerText = text;
+    fragment.appendChild(element);
+  }
+
+  return fragment;
+}
  
+
 /**
  * Sets the theme of the page to either "night" or "day" by changing the background colors
  * and updating the value of a data attribute.
@@ -288,29 +261,27 @@ export function handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches) {
 
 
 // data list items
-export function handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches) {
-  document
-  .querySelector("[data-list-items]")
-  .addEventListener("click", (event) => {
-    const pathArray = Array.from(event.path || event.composedPath());
-    let active = null;
+export function singleActiveBook(event, authors, books) {
+  const pathArray = Array.from(event.path || event.composedPath());
+  let active = null;
 
-    for (const node of pathArray) {
-      if (active) break;
+  for (const node of pathArray) {
+    if (active) break;
 
-      if (node?.dataset?.preview) {
-        let result = null;
+    if (node?.dataset?.preview) {
+      let result = null;
 
-        for (const singleBook of books) {
-          if (result) break;
-          if (singleBook.id === node?.dataset?.preview) result = singleBook;
-        }
-
-        active = result;
+      for (const singleBook of books) {
+        if (result) break;
+        if (singleBook.id === node?.dataset?.preview) result = singleBook;
       }
-    }
 
-    if (active) {
+      active = result;
+    }
+  }
+
+
+  if (active) {
       document.querySelector("[data-list-active]").open = true;
       document.querySelector("[data-list-blur]").src = active.image;
       document.querySelector("[data-list-image]").src = active.image;
@@ -321,7 +292,7 @@ export function handleActiveBooks(authors, books, BOOKS_PER_PAGE, page, matches)
       document.querySelector("[data-list-description]").innerText =
         active.description;
     }
-  });
-}
+  };
+
 
 
