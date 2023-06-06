@@ -92,9 +92,9 @@ preview.innerHTML = `
       const {content} = preview
       this.inner.appendChild(content.cloneNode(true));
 
-      // this.addEventListener("click", (event) => {
-      //   singleActiveBook(event, authors, books);
-      // });
+      this.addEventListener("click", (event) => {
+         singleActiveBook(event, authors, books);
+      });
 
     }
   
@@ -108,8 +108,9 @@ preview.innerHTML = `
       const index = this.getAttribute('index');
         
       imgElement.src = prop.image;
-      titleElement.textContent = prop.title;
       authorElement.textContent = authors[prop.author];
+      titleElement.textContent = prop.title;
+      
   
       this.dataset.index = index;
       this.id = prop.id;
