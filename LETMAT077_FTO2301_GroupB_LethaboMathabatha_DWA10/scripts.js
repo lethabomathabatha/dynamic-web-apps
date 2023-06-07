@@ -1,4 +1,3 @@
-// @ts-check
 
 const MAX_NUMBER = 50
 const MIN_NUMBER = -25
@@ -11,7 +10,7 @@ const subtract = document.querySelector('[data-key="subtract"]')
 const add = document.querySelector('[data-key="add"]')
 const reset = document.querySelector('[data-key="reset"]')
 
-const resetAlert = document.querySelector('[reset-alert]')
+const resetAlert = document.querySelector('sl-alert')
 
 
 // subtracting
@@ -48,13 +47,13 @@ const resetHandler = (e) => {
     e.preventDefault;
     const defaultValue = DEFAULT;
     number.value = defaultValue;
-
-    resetAlert.show();
-}
+    resetAlert.show()
+ }
 
 subtract.addEventListener ('click', subtractHandler);
 add.addEventListener ('click', addHandler);
 reset.addEventListener ('click', resetHandler);
+
 
 
 
