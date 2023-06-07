@@ -51,7 +51,7 @@
             </sl-dropdown>
         </label>
 
-        <sl-button variant="success" outline class="reset" data-key="subtract"> 
+        <sl-button variant="success" outline class="reset" data-key="reset"> 
             <sl-icon slot="suffix" name="arrow-counterclockwise"></sl-icon>
             Reset
         </sl-button>
@@ -61,10 +61,16 @@
     <main class="counter">
       <input class="counter__value" data-key="number" readonly value="0">
 
+        <sl-alert variant="success" class="reset-alert" duration="3000" closable>
+            <sl-icon slot="icon" name="check2-circle"></sl-icon>
+            <strong>The counter has been reset to 0.</strong>
+            <br/>
+                Use the counter buttons to start tracking again.
+        </sl-alert>
+
       <div class="counter__actions">
-        <sl-button variant="success" class="success" outline data-key="subtract" class="counter__button counter__button_first">-</sl-button>
-        <!-- <sl-button variant="neutral" outline class="max-min"></sl-button>  -->
-        <sl-button variant="success" class="success" outline data-key="add" class="counter__button">+</sl-button>
+        <sl-button variant="success" outline data-key="subtract" class="counter__button counter__button_first">-</sl-button>
+        <sl-button variant="success" outline data-key="add" class="counter__button">+</sl-button>
       </div> 
     </main>
 
