@@ -4,25 +4,60 @@ const template = document.createElement('template');
 
 template.innerHTML = /* html */ `
   <style>
-    .display {
-      padding: 0.5rem;
-      font-weight: bold;
-      color: red;
+    .controls {
+      align-self: center;
+      margin-bottom: 2rem;
+      
     }
 
     .counter {
       font-weight: bold;
-      color: red;
     }
 
-    .counter__actions sl-button [variant="success"]{
-      color: red;
-      height: 50rem;
+    .counter-options sl-button {
+      
     }
 
-    .settings {
-      border: saddlebrown 5px solid;
+    .counter__actions {
+      align-items: center;
+      justify-content: center;
     }
+    
+
+    .counter__button::part(base) {
+      height: 10rem;
+      width: 45rem;
+      display: flex;
+      align-items: center;
+      margin: 1rem;
+      font-size: 4rem;
+      transition: transform 0.3s;
+      transform: translateY(0);
+      border-radius: 0.6rem;
+    }
+
+  
+
+    .reset-alert {
+      display: flex
+      align-self: center;
+      width: 10rem;
+      height: 12rem
+    }
+
+    @media (min-width: 600px) {
+      .counter__button::part(base) {
+        height: 10rem;
+        width: 45rem;
+        display: flex;
+        align-items: center;
+        margin: 1rem;
+        font-size: 4rem;
+        transition: transform 0.3s;
+        transform: translateY(0);
+        border-radius: 0.6rem;
+      }
+    
   
   </style>
 `;
