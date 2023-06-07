@@ -16,28 +16,45 @@
 
   <body>
     <header class="header">
-        <h1 class="header__title">Tally Count</h1>
+        <h1 class="header__title">TALLY COUNT</h1>
     </header>
 
-    <aside class="controls">
-      <label class="display"> 
-            <sl-select label="Display">
-            <sl-option value="single">Single</sl-option>
-            <sl-option value="multiple">Multiple</sl-option> 
-            </sl-select>
-      </label>
-
+    <aside class="controls" >
+        <label class="display"> 
+            <sl-dropdown distance="10">
+                <sl-button slot="trigger" caret variant="success">Display</sl-button>
+                <sl-menu>
+                <sl-menu-item>Single</sl-menu-item>
+                <sl-menu-item>Multiple</sl-menu-item>          
+                </sl-menu>
+            </sl-dropdown>
+        </label>
+      
      
-      <label class="counter">
-        <sl-select label="Counter">
-            <sl-option value="counter-1">Counter 1</sl-option>
-            <sl-option value="counter-2">Counter 2</sl-option>
-            <sl-option value="counter-3">Counter 3</sl-option>
-        </sl-select>
-      </label>
+        <label class="counter-options">
+            <sl-dropdown distance="10">
+                <sl-button slot="trigger" caret variant="success">Counter</sl-button>
+                <sl-menu>
+                    <sl-menu-item>Counter 1</sl-menu-item>
+                    <sl-menu-item>Counter 2</sl-menu-item>          
+                </sl-menu>
+            </sl-dropdown>
+        </label>
 
-      <sl-button variant="settings" class="settings">Settings</sl-button>
+        <label class="settings">
+            <sl-dropdown distance="10">
+                <sl-button slot="trigger" caret variant="success">Settings</sl-button>
+                <sl-menu>
+                    <sl-menu-item>Increment By</sl-menu-item>
+                    <sl-menu-item>Button Preferences</sl-menu-item>          
+                </sl-menu>
+            </sl-dropdown>
+        </label>
 
+        <sl-button variant="success" outline class="reset" data-key="subtract"> 
+            <sl-icon slot="suffix" name="arrow-counterclockwise"></sl-icon>
+            Reset
+        </sl-button>
     </aside>
 
 
@@ -45,12 +62,12 @@
       <input class="counter__value" data-key="number" readonly value="0">
 
       <div class="counter__actions">
-        <sl-button variant="success" outline data-key="subtract" class="counter__button counter__button_first">-</sl-button>
-        <sl-button variant="success" outline data-key="add" class="counter__button">+</sl-button>
-        <sl-button variant="neutral" outline class="max-min"></sl-button>
-      </div>
+        <sl-button variant="success" class="success" outline data-key="subtract" class="counter__button counter__button_first">-</sl-button>
+        <!-- <sl-button variant="neutral" outline class="max-min"></sl-button>  -->
+        <sl-button variant="success" class="success" outline data-key="add" class="counter__button">+</sl-button>
+      </div> 
     </main>
-  
+
     <footer class="footer">
       Inspired by <a class="footer__link" href="https://tallycount.app/">Tally Count.</a>
       This is merely a student practice project for learning JavaScript.
