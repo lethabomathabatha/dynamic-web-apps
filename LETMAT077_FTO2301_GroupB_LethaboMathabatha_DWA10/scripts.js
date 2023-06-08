@@ -1,7 +1,7 @@
 
 const MAX_NUMBER = 50
 const MIN_NUMBER = -25
-const STEP_AMOUNT = 5; 
+const STEP_AMOUNT = 1; 
 const DEFAULT = 0;
 
 
