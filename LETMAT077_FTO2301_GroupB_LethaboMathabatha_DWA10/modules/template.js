@@ -153,11 +153,11 @@ template.innerHTML = /* html */ `
         font-size: 0.9rem;
       }
 
-      /* laptop large */
+      /* 4k */
     @media (max-width: 1440px ) {
       .counter__button::part(base) {
         height: 7rem;
-        width: 10rem;
+        width: 7rem;
         align-items: center;
         margin: 1rem;
         font-size: 2.5rem;
