@@ -17,7 +17,9 @@ preview.innerHTML = `
       <div class="overlay__row">
         <button class="overlay__button overlay__button_primary" data-list-close>Close</button>
       </div>
-    </dialog>
+</dialog>
+
+
 <style> 
 .preview {
   border-width: 0;
@@ -75,15 +77,15 @@ preview.innerHTML = `
   color: rgba(var(--color-dark), 0.4);
 } 
 
-
 </style>
 
 
-<img src=""  class="preview__image" ></img>
+<img src=""  class="preview__image"></img>
 <div class="preview__info">
   <h3 class="preview__title"></h3>
   <div class="preview__author"></div>
-  </div>`;
+</div>
+`;
   
   export class PreviewList extends HTMLElement {
     inner = this.attachShadow({mode: "closed"})
@@ -92,9 +94,9 @@ preview.innerHTML = `
       const {content} = preview
       this.inner.appendChild(content.cloneNode(true));
 
-      this.addEventListener("click", (event) => {
-         singleActiveBook(event, authors, books);
-      });
+      // this.addEventListener("click", (event) => {
+      //    singleActiveBook(event, authors, books);
+      // });
 
     }
   
@@ -121,6 +123,7 @@ preview.innerHTML = `
   }
   
   customElements.define('preview-list', PreviewList);
+  
   
 
   
