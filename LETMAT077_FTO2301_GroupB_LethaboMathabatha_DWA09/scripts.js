@@ -1,23 +1,54 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from "./modules/data.js";
 import { 
-  createBookGenerator, 
   createGenreOptionsFragment,
   createAuthorOptionsFragment, 
   setTheme, 
-
   handleSettingsFormSubmit, 
   processSearchForm, 
   handlePreviews, 
   singleActiveBook,
 } from "./modules/helper.js";
 
-import { 
-  handleSearchOverlays, handleSettingsOverlays, handleHeaderSearchOverlays, handleHeaderSettingsOverlays, handleListOverlays } from "./modules/handlers.js";
+import { handleSearchOverlays, handleSettingsOverlays, handleHeaderSearchOverlays, handleHeaderSettingsOverlays, handleListOverlays } from "./modules/handlers.js";
 
+import { PreviewList } from "./modules/preview-list.js";
+
+
+// Generate document fragment
 let page = 1;
 let matches = books;
+/**
+ * Generates a document fragment containing a list of buttons, each representing a starting book.
+ *
+ * @param {Array} matches - The list of books.
+ * @param {number} BOOKS_PER_PAGE - The number of books to display per page.
+ * @param {object} authors - An object containing the authors of the books.
+ * @return {DocumentFragment} A document fragment containing a list of buttons representing the starting books.
+ */
+function createBookGenerator() {
+  const getStartingBooks = (matches, BOOKS_PER_PAGE, authors) => {
+    const starting = document.createDocumentFragment();
 
-// generate starting books
+    for (let i = 0; i < Math.min(matches.length, BOOKS_PER_PAGE); i++) {
+      const book = matches[i];
+      const { author, id, image, title } = book;
+
+      const element = document.createElement('preview-list');
+      element.setAttribute('prop', JSON.stringify({ author, id, image, title }));
+      element.setAttribute('index', i.toString());
+      starting.appendChild(element);
+    }
+
+    return starting;
+  };
+
+  return {
+    getStartingBooks,
+  };
+}
+PreviewList;
+
+
 const bookGenerator = createBookGenerator();
 const startingBooks = bookGenerator.getStartingBooks(matches, BOOKS_PER_PAGE, authors);
 document.querySelector('[data-list-items]').appendChild(startingBooks);
@@ -45,7 +76,9 @@ function loadMoreBooks(page, matches, books, BOOKS_PER_PAGE) {
           : 0
       })</span>
   `;
-}
+  
+} 
+
 
 
 // generate genre options
@@ -134,6 +167,7 @@ document.querySelector("[data-header-search]").addEventListener("click", handleH
 document.querySelector("[data-header-settings]").addEventListener("click", handleHeaderSettingsOverlays);
 document.querySelector("[data-list-close]").addEventListener("click", handleListOverlays);
 
+
 // settings handler
 document
   .querySelector("[data-settings-form]")
@@ -147,12 +181,14 @@ processSearchForm(authors, books, BOOKS_PER_PAGE, page, matches);
 handlePreviews(authors, books, BOOKS_PER_PAGE, page, matches);
 
 // active book/list handler
-function handleActiveBooks(authors, books) {
+function handleActiveBooks(authors, books, genres) {
   document
   .querySelector("[data-list-items]")
   .addEventListener("click", (event) => {
-    singleActiveBook(event, authors, books);
+    singleActiveBook(event, authors, books, genres);
   });
+  
 }
-handleActiveBooks(authors, books);
+handleActiveBooks(authors, books, genres);
+
 
