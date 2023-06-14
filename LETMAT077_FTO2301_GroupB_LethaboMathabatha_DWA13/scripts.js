@@ -102,8 +102,40 @@ console.log(
         if (product.product.length > 5) {
             return product
         }
-    })
+    }),
     
 
     // using both filter and map. Convert all prices that are strings to numbers, and remove all products from the array that do not have prices.
+    products
+    .filter((product) => product.price !== '' && product.price !== ' ' && !isNaN(Number(product.price)))
+    .map((product) => ({ ...product, price: Number(product.price) }))
+    .filter((product) => !isNaN(product.price)),
+
+
+    // use reduce to concatenate all product names to create the following string: banana, mango, potato, avocado, coffee and tea.
+    products.reduce((result, product, index) => {
+        if (index === products.length - 1) {
+            result += product.product
+        } else {
+            result += `${product.product}, `
+        }
+        return result
+    }, ""),
+
+
+    // Use reduce to calculate both the highest and lowest-priced items. The names should be returned as the following string: Highest: coffee. Lowest: banana.
+    products.reduce(
+        (result, product) => {
+          if (product.price > result.highest.price) {
+            result.highest = product;
+          }
+          if (product.price < result.lowest.price) {
+            result.lowest = product;
+          }
+          return result;
+        },
+        { highest: products[0], lowest: products[0] }
+      )
+      
+
 )
