@@ -135,7 +135,19 @@ console.log(
           return result;
         },
         { highest: products[0], lowest: products[0] }
-      )
+        
+      ),
       
-
+    /*
+    Using only Object.entries and reduce recreate the object with the exact same values. However, the following object keys should be changed in the new array:
+    * product should be changed to name
+    * price should be changed to cost
+    */
+    Object.entries(products).reduce((obj, [key, value]) => {
+        const updatedKey = key === 'product' ? 'name' : key === 'price' ? 'cost' : key;
+        obj[updatedKey] = value;
+        return obj;
+      }, {}),
+      
+    
 )
