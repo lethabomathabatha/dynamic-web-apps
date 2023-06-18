@@ -8,12 +8,12 @@ import { reducer, initialState } from './modules/reducers.js';
 const MAX_NUMBER = 50
 const MIN_NUMBER = -25
 const STEP_AMOUNT = 1; 
-const DEFAULT = 0;
 
 const store = createCountStore(reducer, initialState);
 
-const render = () => {
-  const state = store.getState();
+
+const render = (state) => {
+  console.log('New State: ', state)
   number.value = state.counter;
 
   subtract.disabled = state.counter <= MIN_NUMBER;
