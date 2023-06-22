@@ -2,88 +2,24 @@
 <html lang="en">
   <head>
     <title>Tally Count Replica DWA14</title>
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.4.0/dist/themes/light.css" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.4.0/dist/shoelace-autoloader.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.0/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.0/cdn/shoelace.js" defer></script>
+      
     <link rel="stylesheet" type="text/css" href="./styles.css">
     <script src="./scripts.js" defer type="module"></script>
-    <!-- <script src="./template.js" defer></script> -->
-    <script src="./global-styles.js" defer type="module"></script> 
+    <script src="./template.js" defer type="module"></script>
   </head>
 
   <body> 
     <tally-counter></tally-counter>
-    
-    <!-- <header class="header">
-        <h1 class="header__title">TALLY COUNT DWA14</h1>
-    </header>
-
-    <aside class="controls" >
-        <label class="display"> 
-            <sl-dropdown distance="10">
-                <sl-button slot="trigger" caret variant="success">Display</sl-button>
-                <sl-menu>
-                <sl-menu-item>Single</sl-menu-item>
-                <sl-menu-item>Multiple</sl-menu-item>          
-                </sl-menu>
-            </sl-dropdown>
-        </label>
-      
-     
-        <label class="counter-options">
-            <sl-dropdown distance="10">
-                <sl-button slot="trigger" caret variant="success">Counter</sl-button>
-                <sl-menu>
-                    <sl-menu-item>Counter 1</sl-menu-item>
-                    <sl-menu-item>Counter 2</sl-menu-item>          
-                </sl-menu>
-            </sl-dropdown>
-        </label>
-
-        <label class="settings">
-            <sl-dropdown distance="10">
-                <sl-button slot="trigger" caret variant="success">Settings</sl-button>
-                <sl-menu>
-                    <sl-menu-item>Increment By</sl-menu-item>
-                    <sl-menu-item>Button Preferences</sl-menu-item>          
-                </sl-menu>
-            </sl-dropdown>
-        </label>
-
-        <sl-button variant="success" outline class="reset" data-key="reset"> 
-            <sl-icon slot="suffix" name="arrow-counterclockwise"></sl-icon>
-            Reset
-        </sl-button>
-    </aside>
-
-
-    <main class="counter">
-      <input class="counter__value" data-key="number" readonly value="0">
-
-        <sl-alert variant="success" class="reset-alert" duration="3000" closable>
-            <sl-icon slot="icon" name="check2-circle"></sl-icon>
-            <strong>The counter has been reset to 0.</strong>
-            <br/>
-                Use the counter buttons to start tracking again.
-        </sl-alert>
-
-      <div class="counter__actions">
-        <sl-button variant="success" outline data-key="subtract" class="counter__button counter__button_first">-</sl-button>
-        <sl-button variant="success" outline data-key="add" class="counter__button">+</sl-button>
-      </div> 
-    </main>
-
-    <footer class="footer">
-      Inspired by <a class="footer__link" href="https://tallycount.app/">Tally Count.</a>
-      This is merely a student practice project for learning JavaScript.
-    </footer> -->
-    
   </body>
-
 </html> 
 
