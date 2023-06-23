@@ -98,9 +98,6 @@ class TallyCounter extends LitElement {
       font-weight: bold;
     }
 
-    .counter-options sl-button {
-      
-    }
 
     .counter__actions {
       align-items: center;
