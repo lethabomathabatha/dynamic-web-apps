@@ -306,7 +306,7 @@ class TallyCounter extends LitElement {
   
     constructor() {
       super();
-      this.value = DEFAULT;
+      this.value = '0';
       this.showModal = false;      
       this.max = 50;
       this.min = -25;
@@ -322,7 +322,7 @@ class TallyCounter extends LitElement {
   
     subtractHandler = () => {
       let count = parseInt(this.value);
-      count -= STEP_AMOUNT;
+      count -= 1;
       count === this.min ? (this.state = States.MIN) : (this.state = States.DEFAULT);
       this.value = count.toString();
       this.requestUpdate('value');
@@ -331,7 +331,7 @@ class TallyCounter extends LitElement {
   
     addHandler = () => {
       let count = parseInt(this.value);
-      count += STEP_AMOUNT;
+      count += 1;
       count === this.max ? (this.state = States.MAX) : (this.state = States.DEFAULT);
       this.value = count.toString();
       console.log('Addition')
